@@ -17,10 +17,12 @@ echo "🚀 Publicando la base de datos..."
   /TargetServerName:localhost \
   /TargetDatabaseName:"Medical.Office.SqlLocalDB" \
   /TargetUser:sa \
-  /TargetPassword:$MSSQL_SA_PASSWORD \
+ /TargetPassword:${MSSQL_SA_PASSWORD} \
   /TargetEncryptConnection:False \
   /TargetTrustServerCertificate:True \
   /p:DropObjectsNotInSource=True \
   /p:AllowIncompatiblePlatform=True
+
+echo "¡Publicación completada!"
 
 wait
