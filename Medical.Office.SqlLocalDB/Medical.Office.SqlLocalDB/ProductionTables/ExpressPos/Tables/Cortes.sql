@@ -1,0 +1,7 @@
+-- Tabla de Cortes
+CREATE TABLE Cortes (
+    CorteID INTEGER PRIMARY KEY IDENTITY(1,1),
+    FechaHora DATETIME DEFAULT CURRENT_TIMESTAMP,
+    TotalVendido REAL NOT NULL,
+    TotalVentas INTEGER NOT NULL
+);
