@@ -3,7 +3,6 @@ AppName=Medical Soft
 AppVersion=1.0
 DefaultDirName={pf}\Medical-Soft
 DefaultGroupName=Medical Soft
-OutputDir={tmp}
 OutputBaseFilename=MedicalSoftInstaller
 Compression=lzma
 SolidCompression=yes

@@ -22,10 +22,11 @@ jobs:
 
       - name: Move generated .exe to workspace
         run: |
-          find . -name "*.exe" -exec cp {} ./MedicalSoftInstaller.exe \;
+          find /work -name "*.exe" -exec cp {} ./MedicalSoftInstaller.exe \;
 
       - name: Upload .exe as artifact
         uses: actions/upload-artifact@v4
         with:
           name: MedicalSoftInstaller
           path: MedicalSoftInstaller.exe
+
