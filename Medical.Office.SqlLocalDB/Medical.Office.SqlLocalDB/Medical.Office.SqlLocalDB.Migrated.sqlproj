@@ -8,4 +8,8 @@
   <ItemGroup>
     <SqlFiles Include="**\*.sql" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PostDeploy Include="InsertPreConfig.sql" />
+  </ItemGroup>
 </Project>
