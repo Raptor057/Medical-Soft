@@ -1,19 +1,29 @@
 services:
   medicalofficesql:
-    container_name: medicalofficesql
+      image: mcr.microsoft.com/mssql/server:2022-latest
+      container_name: medicalofficesql
+      ports:
+        - "1433:1433"
+      environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Cbmwjmkq23!
+      volumes:
+        - sql-data:/var/opt/mssql
+      restart: always
+
+
+  publisher:
+    #image: medical-office-db  # tu imagen con el dacpac + script
+    container_name: medicalofficepublisher
     build:
       context: "./Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/"
       dockerfile: Dockerfile
-      args:
-        SA_PASSWORD: ${SA_PASSWORD}
+    depends_on:
+      - medicalofficesql
     environment:
-      SA_PASSWORD: ${SA_PASSWORD}
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
-    ports:
-      - "1433:1433"
-    volumes:
-      - sql_data:/var/opt/mssql
+      - MSSQL_SA_PASSWORD=Cbmwjmkq23!
+    restart: "no"
+
 
   medicalofficewebapi:
     container_name: medicalofficewebapi
@@ -48,4 +58,4 @@ services:
     restart: always
 
 volumes:
-  sql_data:
+  sql-data:
