@@ -20,6 +20,10 @@ jobs:
         run: |
           docker run --rm -v "${{ github.workspace }}:/work" amake/innosetup installer.iss
 
+      - name: Move generated .exe to workspace
+        run: |
+          find . -name "*.exe" -exec cp {} ./MedicalSoftInstaller.exe \;
+
       - name: Upload .exe as artifact
         uses: actions/upload-artifact@v4
         with:
