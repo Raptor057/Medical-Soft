@@ -1,5 +1,5 @@
 services:
-  sql1:
+  medicalofficesql:
     container_name: medicalofficesql
     build:
       context: "./Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/"
@@ -15,7 +15,7 @@ services:
     volumes:
       - sql_data:/var/opt/mssql
 
-  medicalofficeapi:
+  medicalofficewebapi:
     container_name: medicalofficewebapi
     build:
       context: "./Medical.Office.Net8WebApi/"
@@ -28,11 +28,11 @@ services:
       - "8080:8080"
       - "8081:8081"
     depends_on:
-      - sql1
+      - medicalofficesql
     command: /bin/sh -c "sleep 30 && dotnet Medical.Office.Api.dll"
     restart: always
 
-  frontend:
+  medicalofficewebclient:
     container_name: medicalofficewebclient
     build:
       context: "./Medical.Office.ReactWebClient/"
@@ -44,7 +44,7 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - medicalofficeapi
+      - medicalofficewebapi
     restart: always
 
 volumes:

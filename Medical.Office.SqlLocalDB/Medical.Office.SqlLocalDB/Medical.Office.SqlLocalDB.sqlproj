@@ -57,8 +57,6 @@
   <ItemGroup>
     <Folder Include="ConfigurationTables\MedicalOffice\Prescription" />
     <Folder Include="ProductionTables\ExpressPos" />
-    <Folder Include="ProductionTables\ExpressPos\Tables" />
-    <Folder Include="ProductionTables\ExpressPos\Views" />
     <Folder Include="Properties" />
     <Folder Include="ConfigurationTables" />
     <Folder Include="ProductionTables" />
@@ -116,18 +114,14 @@
     <Build Include="ConfigurationTables\MedicalOffice\Configuracion\LaboralDays.sql" />
     <Build Include="ConfigurationTables\MedicalOffice\Configuracion\DaysTranslation.sql" />
     <Build Include="ConfigurationTables\Views\TodayInLettersView.sql" />
-    <Build Include="ProductionTables\ExpressPos\Tables\Cortes.sql" />
-    <Build Include="ProductionTables\ExpressPos\Tables\DetalleVentas.sql" />
-    <Build Include="ProductionTables\ExpressPos\Tables\Productos.sql" />
-    <Build Include="ProductionTables\ExpressPos\Tables\Ventas.sql" />
-    <Build Include="ProductionTables\ExpressPos\Views\DetalleDeVentas.sql" />
-    <Build Include="ProductionTables\ExpressPos\Views\VentasPorDia.sql" />
     <Build Include="UtcTime\GlobalSettings.sql" />
     <Build Include="UtcTime\UfnToLocalTime.sql" />
     <Build Include="UtcTime\UfnToUniversalTime.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="Medical.Office.SqlLocalDB.refactorlog" />
+    <Build Include="ProductionTables\ExpressPos\Cortes.sql" />
+    <Build Include="ProductionTables\ExpressPos\DetalleVentas.sql" />
+    <Build Include="ProductionTables\ExpressPos\Productos.sql" />
+    <Build Include="ProductionTables\ExpressPos\Ventas.sql" />
+    <Build Include="ProductionTables\ExpressPos\VentasPorDia.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="ConfigurationTables\MedicalOffice\Configuracion\LoginHistory.sql" />
@@ -152,10 +146,9 @@
   </Target>
   <!-- Copia el DACPAC generado al root del proyecto para usarlo con Docker y CI/CD -->
   <Target Name="CopyDacpac" AfterTargets="Build">
-  <ItemGroup>
-    <DacpacFile Include="$(OutputPath)$(MSBuildProjectName).dacpac" />
-  </ItemGroup>
-  <Copy SourceFiles="@(DacpacFile)" DestinationFolder="$(ProjectDir)" />
-</Target>
-
+    <ItemGroup>
+      <DacpacFile Include="$(OutputPath)$(MSBuildProjectName).dacpac" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DacpacFile)" DestinationFolder="$(ProjectDir)" />
+  </Target>
 </Project>
