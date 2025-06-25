@@ -1,0 +1,87 @@
+# services:
+#   api:
+#     build:
+#       context: "./Medical.Office.Net8WebApi/"
+#       dockerfile: Dockerfile
+#       args:
+#         GPG_PASSPHRASE: ${GPG_PASSPHRASE}
+#     ports:
+#       - "8080:8080"
+#       - "8081:8081"
+
+#   frontend:
+#     build:
+#       context: "./Medical.Office.ReactWebClient/"
+#       dockerfile: Dockerfile
+#       args:
+#         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+#     ports:
+#       - "3000:80"
+
+#   sql:
+#       build:
+#         context: "./Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/"
+#         dockerfile: Dockerfile
+#         args:
+#           MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+#       environment:
+#         MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+#         ACCEPT_EULA: "Y"
+#       ports:
+#         - "1433:1433"
+#       volumes:
+#         - sql_data:/var/opt/mssql
+
+# volumes:
+#   sql_data:
+services:
+  sql1:
+    container_name: medicalofficesql
+    build:
+      context: "./Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/"
+      dockerfile: Dockerfile
+      args:
+        SA_PASSWORD: ${SA_PASSWORD}
+    environment:
+      - ACCEPT_EULA=${ACCEPT_EULA}
+      - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - medical_office_sql_data:/var/opt/mssql
+    restart: always
+
+  medicalofficeapi:
+    container_name: medicalofficewebapi
+    build:
+      context: "./Medical.Office.Net8WebApi/"
+      dockerfile: Dockerfile
+      args:
+        GPG_PASSPHRASE: ${GPG_PASSPHRASE}
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - sql1
+    command: /bin/sh -c "sleep 30 && dotnet Medical.Office.Api.dll"
+    restart: always
+
+  frontend:
+    container_name: medicalofficewebclient
+    build:
+      context: "./Medical.Office.ReactWebClient/"
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    ports:
+      - "3000:80"
+    depends_on:
+      - medicalofficeapi
+    restart: always
+
+volumes:
+  medical_office_sql_data:

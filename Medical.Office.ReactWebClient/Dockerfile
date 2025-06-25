@@ -1,40 +1,38 @@
-# Versión 3.0
-# Etapa 1: Construcción de la aplicación
+# Etapa 1: Build de Next.js
 FROM node:lts-alpine AS build
 WORKDIR /usr/src/app
 
-# Copiar los archivos necesarios para instalar dependencias
-COPY ["package.json", "package-lock.json*", "./"]
+# Copiar archivos de dependencias
+COPY package*.json ./
 
-# Instalar dependencias
-RUN npm install --silent
+# Instalar dependencias de forma limpia
+RUN npm ci
 
-# Copiar el código fuente
+# Copiar el resto del código fuente
 COPY . .
 
-# Pasar la variable de entorno para React
+# Variable para el build de Next.js (por ejemplo API URL)
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
-# Construir la aplicación estática
+# Ejecutar el build estático de Next.js
 RUN npm run build
 
-# Etapa 2: Servir los archivos estáticos con Nginx
+# Etapa 2: Imagen de producción usando Nginx
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
-# Copiar los archivos generados al directorio de Nginx
+# Copiar los archivos generados por Next.js
 COPY --from=build /usr/src/app/out .
 
 # Remover configuración por defecto de Nginx
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Agregar configuración personalizada de Nginx
-#COPY nginx.conf /etc/nginx/conf.d
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer el puerto 80
+# Exponer el puerto para servir el frontend
 EXPOSE 80
 
-# Comando para iniciar Nginx
+# Iniciar Nginx en modo foreground
 CMD ["nginx", "-g", "daemon off;"]

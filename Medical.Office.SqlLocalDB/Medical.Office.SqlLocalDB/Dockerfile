@@ -1,52 +1,85 @@
-# # Imagen base de SQL Server
-# FROM mcr.microsoft.com/mssql/server:2022-latest
 
-# # Configuración de variables de entorno
+# # syntax=docker/dockerfile:1
+# ARG SA_PASSWORD
+# FROM mcr.microsoft.com/mssql/server:2022-latest AS final
+
+# ENV MSSQL_SA_PASSWORD=${SA_PASSWORD}
 # ENV ACCEPT_EULA=Y
-# ENV MSSQL_SA_PASSWORD=Cbmwjmkq23
-# ENV MSSQL_PID=Express
 
-# # Crear un volumen para la persistencia de datos
-# VOLUME /var/opt/mssql
+# # ⚠️ Ejecutar como root para instalar paquetes
+# USER root
 
-# # Health check para verificar que el servidor SQL esté listo
-# HEALTHCHECK --interval=10s --timeout=10s --retries=10 \
-#     CMD /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$MSSQL_SA_PASSWORD" -Q "SELECT 1" || exit 1
+# # Instala dependencias necesarias
+# RUN apt-get update && \
+#     apt-get install -y unzip libunwind8 libicu-dev netcat && \
+#     rm -rf /var/lib/apt/lists/*
 
-# # Exponer el puerto predeterminado de SQL Server
-# EXPOSE 1433
+# # Instala sqlpackage
+# COPY sqlpackage-linux-x64-en-*.zip /tmp/sqlpackage.zip
+# RUN unzip /tmp/sqlpackage.zip -d /opt/sqlpackage && \
+#     chmod +x /opt/sqlpackage/sqlpackage && \
+#     ln -s /opt/sqlpackage/sqlpackage /usr/bin/sqlpackage
 
-# # Comando para iniciar SQL Server
-# CMD /opt/mssql/bin/sqlservr
+# # Script y dacpac
+# WORKDIR /publish
+# COPY publish-db.sh .
+# COPY Medical.Office.SqlLocalDB.dacpac .
+# RUN chmod +x publish-db.sh
 
+# # Opcional: vuelve al usuario mssql si quieres que la publicación no sea como root
+# # USER mssql
 
+# CMD ["/bin/bash", "/publish/publish-db.sh"]
+
+# syntax=docker/dockerfile:1
+
+# syntax=docker/dockerfile:1
+
+### ETAPA 1: Build del .dacpac ###
+#FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS builder
+
+WORKDIR /src
+
+# Copia el archivo .sqlproj y restaura dependencias
+COPY "./Medical.Office.SqlLocalDB.Migrated.sqlproj" "./"
+RUN dotnet restore
+
+# Copia el contenido del proyecto SQL
+COPY ["./", "./"]
+
+# Compila el .dacpac usando dotnet build
+#RUN dotnet build -c Release -o /out
+RUN dotnet build Medical.Office.SqlLocalDB.Migrated.sqlproj -c Release -o /out
+
+### ETAPA 2: Publicar en SQL Server ###
+ARG SA_PASSWORD
 FROM mcr.microsoft.com/mssql/server:2022-latest
 
 ENV ACCEPT_EULA=Y
-ENV MSSQL_SA_PASSWORD=Cbmwjmkq23
-ENV MSSQL_PID=Express
+ENV MSSQL_SA_PASSWORD=${SA_PASSWORD}
 
 USER root
 
-# Copiar zip ya descargado
-#COPY sqlpackage.zip /tmp/sqlpackage.zip
-COPY sqlpackage-linux-x64-en-162.5.57.1.zip /tmp/sqlpackage.zip
-
-# Instalar dependencias y descomprimir sqlpackage
+# Instala dependencias necesarias
 RUN apt-get update && \
-    apt-get install -y unzip libunwind8 netcat && \
-    #apt-get install -y unzip libunwind8 && \
-    unzip /tmp/sqlpackage.zip -d /opt/sqlpackage && \
+    apt-get install -y unzip libunwind8 libicu-dev netcat && \
+    rm -rf /var/lib/apt/lists/*
+
+# Instala sqlpackage
+COPY sqlpackage-linux-x64-en-*.zip /tmp/sqlpackage.zip
+RUN unzip /tmp/sqlpackage.zip -d /opt/sqlpackage && \
     chmod +x /opt/sqlpackage/sqlpackage && \
     ln -s /opt/sqlpackage/sqlpackage /usr/bin/sqlpackage
 
-USER mssql
-
+# Directorio de trabajo para la publicación
 WORKDIR /publish
 
-COPY --chmod=755 publish-db.sh .
-COPY Medical.Office.SqlLocalDB.dacpac .
+# Copia el script de publicación y el .dacpac generado
+COPY --from=builder /out/*.dacpac ./Medical.Office.SqlLocalDB.dacpac
+#COPY Medical.Office.SqlLocalDB/publish-db.sh .
+COPY ["./publish-db.sh","."]
+RUN chmod +x publish-db.sh
 
-EXPOSE 1433
-
-CMD ["/bin/bash", "./publish-db.sh"]
+# Ejecuta el script de publicación al arrancar el contenedor
+CMD ["/bin/bash", "/publish/publish-db.sh"]
