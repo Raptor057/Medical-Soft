@@ -13,20 +13,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Ensure output folder exists
-        run: mkdir -p Output
-
       - name: Compile Inno Setup installer
         run: |
           docker run --rm -v "${{ github.workspace }}:/work" amake/innosetup installer.iss
 
-      - name: Move generated .exe to workspace
+      - name: Find and rename .exe
         run: |
-          find /work -name "*.exe" -exec cp {} ./MedicalSoftInstaller.exe \;
+          EXE_PATH=$(find . -name "*.exe" | head -n 1)
+          echo "Found installer at $EXE_PATH"
+          cp "$EXE_PATH" ./MedicalSoftInstaller.exe
 
-      - name: Upload .exe as artifact
+      - name: Upload installer as artifact
         uses: actions/upload-artifact@v4
         with:
           name: MedicalSoftInstaller
           path: MedicalSoftInstaller.exe
-
