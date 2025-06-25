@@ -7,23 +7,22 @@ on:
 
 jobs:
   build-installer:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Set up Inno Setup
+        run: |
+          choco install innosetup --no-progress
 
       - name: Compile Inno Setup installer
         run: |
-          docker run --rm -v "${{ github.workspace }}:/work" amake/innosetup installer.iss
-
-      - name: Find generated .exe
-        run: |
-          EXE=$(find . -type f -name "*.exe" | head -n 1)
-          echo "EXE_PATH=$EXE" >> $GITHUB_ENV
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
 
       - name: Upload .exe as artifact
         uses: actions/upload-artifact@v4
         with:
           name: MedicalSoftInstaller
-          path: ${{ env.EXE_PATH }}
+          path: Output\*.exe
