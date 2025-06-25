@@ -1,11 +1,15 @@
 [Setup]
-AppName=Medical Office
+AppName=Medical Soft
 AppVersion=1.0
-DefaultDirName={pf}\MedicalOffice
-DefaultGroupName=Medical Office
-OutputBaseFilename=MedicalOfficeInstaller
+DefaultDirName={pf}\Medical-Soft
+DefaultGroupName=Medical Soft
+OutputDir=Output
+OutputBaseFilename=MedicalSoftInstaller
 Compression=lzma
 SolidCompression=yes
+ArchitecturesInstallIn64BitMode=x64
+
+
 
 [Files]
 Source: ".\InstallerSource\Medical.Office.Net8WebApi\*"; \
@@ -62,19 +66,18 @@ var
 begin
   if CurStep = ssPostInstall then
   begin
-    SA_Password := 'Cbmwjmkq23$';
     ServerIP := ConfigPage.Values[0];
     API_URL := 'http://' + ServerIP + ':8080/';
 
     EnvText :=
-      'SA_PASSWORD=' + SA_Password + #13#10 +
+      'SA_PASSWORD=Cbmwjmkq23$'  + #13#10 +
       'GPG_PASSPHRASE=VdDySlYI1XMm1YKsit6XWIfkPxClijXgOZaAt9eobNaxHX4MZh' + #13#10 +
       'NEXT_PUBLIC_API_URL=' + API_URL + #13#10;
 
     EnvFile := ExpandConstant('{app}\.env');
     SaveStringToFile(EnvFile, EnvText, False);
 
-    Exec('cmd.exe', '/C docker-compose up -d', ExpandConstant('{app}'), SW_SHOW, ewWaitUntilTerminated, ResultCode);
+    Exec('cmd.exe', '/C docker-compose up -d --build', ExpandConstant('{app}'), SW_SHOW, ewWaitUntilTerminated, ResultCode);
   end;
 end;
 
