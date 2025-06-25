@@ -14,13 +14,13 @@ namespace Medical.Office.Infra.Repositories
         private readonly MedicalAppointmentCalendarSqlDb _appointmentCalendarSqlDb;
         private readonly AntecedentPatientSqlDb _antecedentPatientSqlDb;
 
-        public PatientsData(MedicalOfficeSqlLocalDB medicalOfficeSql, AntecedentPatientSqlDb antecedentPatientSqlDb ,MedicalAppointmentCalendarSqlDb appointmentCalendarSqlDb ,HostedServicesSqlDb hostedServicesSqlDb,GoogleCalendarService googleCalendarService)
+        public PatientsData(MedicalOfficeSqlLocalDB medicalOfficeSql, AntecedentPatientSqlDb antecedentPatientSqlDb ,MedicalAppointmentCalendarSqlDb appointmentCalendarSqlDb ,HostedServicesSqlDb hostedServicesSqlDb/*,GoogleCalendarService googleCalendarService*/)
         { 
             _antecedentPatientSqlDb=antecedentPatientSqlDb;
             _medicalOfficeSql=medicalOfficeSql;
             _appointmentCalendarSqlDb = appointmentCalendarSqlDb;
             _hostedServicesSqlDb = hostedServicesSqlDb;
-            _googleCalendarService = googleCalendarService;
+            //_googleCalendarService = googleCalendarService;
         }
         
         /// <summary>

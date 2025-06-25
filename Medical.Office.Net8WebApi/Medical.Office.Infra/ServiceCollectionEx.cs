@@ -31,7 +31,8 @@ namespace Medical.Office.Infra
                 .AddSingleton<MedicalOfficeSqlLocalDB>() // Se agrega la base de datos local
                 .AddSingleton<PrescriptionSqlDb>() // Se agrega la base de datos de prescripción
                 .AddSingleton<MedicalAppointmentCalendarSqlDb>()
-                .AddSingleton<GoogleCalendarService>()// Se agrega el servicio de Google Calendar
+                //.AddSingleton<GoogleCalendarService>()// Se agrega el servicio de Google Calendar
+                
                 // Repositorios generales
                 .AddSingleton<IUsersRepository, UsersRepository>() // Se agrega el repositorio de usuarios
                 .AddSingleton<IConfigurationsRepository, ConfigurationsRepository>() // Se agrega el repositorio de configuraciones

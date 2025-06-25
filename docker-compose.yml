@@ -6,7 +6,7 @@ services:
         - "1433:1433"
       environment:
         - ACCEPT_EULA=Y
-        - SA_PASSWORD=Cbmwjmkq23!
+        - SA_PASSWORD=Cbmwjmkq23$
       volumes:
         - sql-data:/var/opt/mssql
       restart: always
@@ -21,7 +21,7 @@ services:
     depends_on:
       - medicalofficesql
     environment:
-      - MSSQL_SA_PASSWORD=Cbmwjmkq23!
+      - MSSQL_SA_PASSWORD=Cbmwjmkq23$
     restart: "no"
 
 

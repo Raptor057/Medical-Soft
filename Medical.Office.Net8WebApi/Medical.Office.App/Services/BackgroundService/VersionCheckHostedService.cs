@@ -11,7 +11,7 @@ namespace Medical.Office.App.Services.BackgroundService
         private Timer? _timer;
 
         private readonly string _localVersionPath = Path.Combine(AppContext.BaseDirectory, "version");
-        private const string _remoteVersionUrl = "https://raw.githubusercontent.com/Raptor057/Medical.Office.Net8WebApi/refs/heads/main/Medical.Office.Net8WebApi/version";
+        private const string _remoteVersionUrl = "https://raw.githubusercontent.com/Raptor057/Medical-Soft/refs/heads/main/Medical.Office.Net8WebApi/Medical.Office.Net8WebApi/version";
 
         public VersionCheckHostedService(ILogger<VersionCheckHostedService> logger, IHttpClientFactory httpClientFactory)
         {
