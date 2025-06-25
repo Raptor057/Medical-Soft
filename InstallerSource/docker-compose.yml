@@ -1,0 +1,58 @@
+services:
+  medicalofficesql:
+      image: mcr.microsoft.com/mssql/server:2022-latest
+      container_name: medicalofficesql
+      ports:
+        - "1433:1433"
+      environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=${SA_PASSWORD}
+      volumes:
+        - sql-data:/var/opt/mssql
+      restart: always
+
+  publisher:
+    container_name: medicalofficepublisher
+    build:
+      context: "./Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/"
+      dockerfile: Dockerfile
+    depends_on:
+      - medicalofficesql
+    environment:
+      - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+    restart: "no"
+
+  medicalofficewebapi:
+    container_name: medicalofficewebapi
+    build:
+      context: "./Medical.Office.Net8WebApi/"
+      dockerfile: Dockerfile
+      args:
+        GPG_PASSPHRASE: ${GPG_PASSPHRASE}
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - medicalofficesql
+    command: /bin/sh -c "sleep 30 && dotnet Medical.Office.Api.dll"
+    restart: always
+
+  medicalofficewebclient:
+    container_name: medicalofficewebclient
+    build:
+      context: "./Medical.Office.ReactWebClient/"
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    ports:
+      - "3000:80"
+    depends_on:
+      - medicalofficewebapi
+    restart: always
+
+volumes:
+  sql-data:

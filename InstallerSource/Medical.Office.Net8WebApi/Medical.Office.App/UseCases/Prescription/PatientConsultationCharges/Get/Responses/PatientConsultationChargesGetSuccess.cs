@@ -1,0 +1,7 @@
+using Common.Common;
+using Medical.Office.App.Dtos.Prescription;
+
+namespace Medical.Office.App.UseCases.Prescription.PatientConsultationCharges.Get.Responses;
+
+public record PatientConsultationChargesGetSuccess(PatientConsultationChargesDto  PatientConsultationCharges) : PatientConsultationChargesGetResponse,ISuccess;
+public record PatientConsultationChargesListGetSuccess(IEnumerable<PatientConsultationChargesDto> PatientConsultationCharges) : PatientConsultationChargesGetResponse,ISuccess;

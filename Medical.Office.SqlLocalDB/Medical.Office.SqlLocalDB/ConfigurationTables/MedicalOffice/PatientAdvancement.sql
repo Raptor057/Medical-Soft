@@ -1,9 +1,0 @@
-CREATE TABLE [dbo].[PatientAdvancement]
-(
-  [Id] BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
-  [IDPatient] BIGINT NOT NULL,
-  [Concept] VARCHAR(MAX),
-  [Quantity] DECIMAL(15,2),
-  [Active] BIT DEFAULT 1,
-  [DateTimeSnap] DATETIME NULL DEFAULT GETUTCDATE()
-)

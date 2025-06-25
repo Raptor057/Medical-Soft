@@ -1,0 +1,5 @@
+using Common.Common;
+
+namespace Medical.Office.App.UseCases.Prescription.PatientLaboratoryAndImagingRequests.Update.Responses;
+
+public record PatientLaboratoryAndImagingRequestsUpdateFailure(string Message):PatientLaboratoryAndImagingRequestsUpdateResponse, IFailure;

@@ -1,0 +1,7 @@
+using Common.Common;
+using Medical.Office.App.Dtos.Prescription;
+
+namespace Medical.Office.App.UseCases.Prescription.PatientLaboratoryAndImagingRequests.Get.Responses;
+
+public record PatientLaboratoryAndImagingRequestsGetSuccess(PatientLaboratoryAndImagingRequestsDto PatientLaboratoryAndImaging) : PatientLaboratoryAndImagingRequestsGetResponse, ISuccess;
+public record PatientLaboratoryAndImagingRequestsListGetSuccess(IEnumerable<PatientLaboratoryAndImagingRequestsDto> PatientLaboratoryAndImaging) : PatientLaboratoryAndImagingRequestsGetResponse, ISuccess;

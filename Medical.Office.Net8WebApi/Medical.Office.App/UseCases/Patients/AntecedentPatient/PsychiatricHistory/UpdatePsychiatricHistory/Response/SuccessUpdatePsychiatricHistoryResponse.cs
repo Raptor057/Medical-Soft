@@ -1,6 +1,0 @@
-using Common.Common;
-using Medical.Office.App.Dtos.Patients.AntecedentPatient.PsychiatricHistory;
-
-namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PsychiatricHistory.UpdatePsychiatricHistory.Response;
-
-public record SuccessUpdatePsychiatricHistoryResponse(PsychiatricHistoryDto PsychiatricHistory) : UpdatePsychiatricHistoryResponse,ISuccess;

@@ -1,6 +1,0 @@
-using Common.Common;
-using Medical.Office.App.Dtos.Patients.AntecedentPatient.PathologicalBackground;
-
-namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.UpdatePathologicalBackground.Response;
-
-public record SuccessUpdatePathologicalBackgroundResponse(PathologicalBackgroundDto PathologicalBackground ) : UpdatePathologicalBackgroundResponse, ISuccess;

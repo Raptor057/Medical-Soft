@@ -1,8 +1,0 @@
-﻿CREATE TABLE [dbo].[LoginHistory]
-(
-	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
-    [Usr] VARCHAR(20) NULL, 
-    [UsrName] VARCHAR(50) NULL, 
-    [UsrToken] VARCHAR(MAX) NULL, 
-    [DateTimeSnap] DATETIME NULL DEFAULT GETDATE()
-)

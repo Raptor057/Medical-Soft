@@ -1,0 +1,15 @@
+<Project Sdk="MSBuild.Sdk.SqlProj/1.15.0">
+  <PropertyGroup>
+<TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Database</OutputType>
+    <DacpacName>Medical.Office.SqlLocalDB</DacpacName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SqlFiles Include="**\*.sql" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PostDeploy Include="InsertPreConfig.sql" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Medical.Office.SqlLocalDB", "Medical.Office.SqlLocalDB\Medical.Office.SqlLocalDB.sqlproj", "{693C67A0-E7E0-48C1-B3B8-7E9F302865D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{693C67A0-E7E0-48C1-B3B8-7E9F302865D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{693C67A0-E7E0-48C1-B3B8-7E9F302865D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{693C67A0-E7E0-48C1-B3B8-7E9F302865D8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{693C67A0-E7E0-48C1-B3B8-7E9F302865D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{693C67A0-E7E0-48C1-B3B8-7E9F302865D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{693C67A0-E7E0-48C1-B3B8-7E9F302865D8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {021C4AA8-505B-477A-84FE-8996F334293C}
+	EndGlobalSection
+EndGlobal

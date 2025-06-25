@@ -1,6 +1,0 @@
-using Common.Common;
-using Medical.Office.App.Dtos.Prescription;
-
-namespace Medical.Office.App.UseCases.Prescription.PatientPrescriptionOfMedications.Update.Responses;
-
-public record PatientPrescriptionOfMedicationsUpdateSuccess(PatientPrescriptionOfMedicationsDto PatientPrescriptionOfMedications) : PatientPrescriptionOfMedicationsUpdateResponse, ISuccess;

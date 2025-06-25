@@ -1,3 +1,0 @@
-namespace Medical.Office.App.UseCases.Patients.PatientAdvancement.DeletePatientAdvancement.Responses;
-
-public record SuccessDeletePatientAdvancementResponse();

@@ -1,7 +1,0 @@
-using Common.Common;
-using Medical.Office.App.Dtos.Prescription;
-
-namespace Medical.Office.App.UseCases.Prescription.PatientMedicalInstructions.Get.Responses;
-
-public record PatientMedicalInstructionsGetSuccess(PatientMedicalInstructionsDto PatientMedicalInstructions) : PatientMedicalInstructionsGetResponse, ISuccess;
-public record PatientMedicalInstructionsListGetSuccess(IEnumerable<PatientMedicalInstructionsDto> PatientMedicalInstructions) : PatientMedicalInstructionsGetResponse, ISuccess;

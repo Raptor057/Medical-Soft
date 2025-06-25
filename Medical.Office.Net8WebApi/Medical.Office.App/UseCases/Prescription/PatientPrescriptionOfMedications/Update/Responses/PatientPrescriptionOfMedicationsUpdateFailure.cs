@@ -1,5 +1,0 @@
-using Common.Common;
-
-namespace Medical.Office.App.UseCases.Prescription.PatientPrescriptionOfMedications.Update.Responses;
-
-public record PatientPrescriptionOfMedicationsUpdateFailure(string Message):PatientPrescriptionOfMedicationsUpdateResponse,IFailure;
