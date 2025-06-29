@@ -61,8 +61,8 @@ end;
 Name: "desktopicon"; Description: "Crear acceso directo en el escritorio"; GroupDescription: "Accesos directos adicionales:"
 
 [Icons]
-Name: "{group}\Medical Office"; Filename: "{code:GetAppUrl}"; IconFilename: "{app}\doctor.ico"
-Name: "{commondesktop}\Medical Office"; Filename: "{code:GetAppUrl}"; Tasks: desktopicon; IconFilename: "{app}\doctor.ico"
+Name: "{group}\Medical-Soft"; Filename: "{code:GetAppUrl}"; IconFilename: "{app}\doctor.ico"
+Name: "{commondesktop}\Medical-Soft"; Filename: "{code:GetAppUrl}"; Tasks: desktopicon; IconFilename: "{app}\doctor.ico"
 
 [UninstallRun]
 Filename: "{app}\down.bat"; Flags: runhidden
