@@ -51,8 +51,12 @@ Asegúrate de tener instalado:
 
 
 ```bash
+# Convierte a formato UNIX (LF)
 sed -i '' 's/\r$//' install.sh
+# Da permisos
 chmod +x install.sh
+
+# Ejecuta
 ./install.sh
 ```
 
@@ -68,9 +72,15 @@ cd installer-linux-macos
 2. Asigna permisos y ejecuta:
 
 ```bash
+# Convierte a formato UNIX
 sed -i 's/\r$//' install.sh
+
+# Da permisos
 chmod +x install.sh
+
+# Ejecuta
 ./install.sh
+
 ```
 
 ## 📤 Publicación de nuevas versiones (desarrolladores)
