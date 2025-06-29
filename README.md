@@ -59,11 +59,6 @@ chmod +x install.sh
 ## 🐧 Instalación en Linux (Ubuntu / Debian / Fedora)
 1. Descarga y descomprime el archivo `installer-linux-macos.zip` desde [Releases](https://github.com/Raptor057/Medical-Soft/releases).
 
-```bash
-unzip installer-linux-macos.zip
-cd installer-linux-macos
-```
-
 2. Dale permisos de ejecución y corre el instalador
 ```bash
 unzip installer-linux-macos.zip
@@ -73,6 +68,7 @@ cd installer-linux-macos
 2. Asigna permisos y ejecuta:
 
 ```bash
+sed -i 's/\r$//' install.sh
 chmod +x install.sh
 ./install.sh
 ```
