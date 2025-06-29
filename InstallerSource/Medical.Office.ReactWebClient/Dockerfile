@@ -5,15 +5,11 @@ WORKDIR /usr/src/app
 # Copiar archivos de dependencias
 COPY package*.json ./
 
-# Instalar dependencias de forma limpia
+# Instalar dependencias
 RUN npm ci
 
 # Copiar el resto del código fuente
 COPY . .
-
-# Variable para el build de Next.js (por ejemplo API URL)
-ARG NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 # Ejecutar el build estático de Next.js
 RUN npm run build
@@ -31,7 +27,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 # Agregar configuración personalizada de Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Exponer el puerto para servir el frontend
+# Exponer el puerto
 EXPOSE 80
 
 # Iniciar Nginx en modo foreground

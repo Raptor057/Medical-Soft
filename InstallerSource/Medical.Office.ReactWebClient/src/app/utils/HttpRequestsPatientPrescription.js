@@ -1,25 +1,33 @@
 'use client';
 
 import axios from 'axios';
-import { urlToUrlWithoutFlightMarker } from 'next/dist/client/components/app-router';
+//import { urlToUrlWithoutFlightMarker } from 'next/dist/client/components/app-router';
 
 // Obtener la baseURL desde las variables de entorno
 //const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
-const baseURL = typeof window !== 'undefined'
-? window.NEXT_PUBLIC_API_URL
-: process.env.NEXT_PUBLIC_API_URL;
+// const baseURL = typeof window !== 'undefined'
+// ? window.NEXT_PUBLIC_API_URL
+// : process.env.NEXT_PUBLIC_API_URL;
 
 //const baseURL = 'http://localhost:8080';
 
 // Crear una instancia de Axios con configuración predeterminada
+// const axiosInstance = axios.create({
+//     baseURL,
+//     headers: {
+//         "Access-Control-Expose-Headers": "Content-Length",
+//         "Content-Type": "application/json",
+//     },
+// });
+
 const axiosInstance = axios.create({
-    baseURL, 
     headers: {
         "Access-Control-Expose-Headers": "Content-Length",
         "Content-Type": "application/json",
     },
 });
+
 
 // Interceptor para incluir el token en cada solicitud
 axiosInstance.interceptors.request.use((config) => {
