@@ -32,16 +32,16 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 ARG GPG_PASSPHRASE
 
-# Instalar GPG solo en esta etapa
-RUN apt-get update && apt-get install -y gnupg && rm -rf /var/lib/apt/lists/*
+# # Instalar GPG solo en esta etapa
+# RUN apt-get update && apt-get install -y gnupg && rm -rf /var/lib/apt/lists/*
 
-# Copiar archivo encriptado
-COPY ["./Medical.Office.Net8WebApi/secrets/google-credentials.json.gpg", "/app/secrets/google-credentials.json.gpg"]
+# # Copiar archivo encriptado
+# COPY ["./Medical.Office.Net8WebApi/secrets/google-credentials.json.gpg", "/app/secrets/google-credentials.json.gpg"]
 
-# Desencriptar el archivo usando la passphrase
-RUN gpg --batch --yes --passphrase "$GPG_PASSPHRASE" \
-    --decrypt /app/secrets/google-credentials.json.gpg \
-    > /app/secrets/google-credentials.json
+# # Desencriptar el archivo usando la passphrase
+# RUN gpg --batch --yes --passphrase "$GPG_PASSPHRASE" \
+#     --decrypt /app/secrets/google-credentials.json.gpg \
+#     > /app/secrets/google-credentials.json
 
 # Publicar la aplicación
 RUN dotnet publish "Medical.Office.Net8WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
