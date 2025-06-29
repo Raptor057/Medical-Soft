@@ -11,7 +11,10 @@ ArchitecturesInstallIn64BitMode=x64
 
 [Files]
 Source: "..\InstallerSource\docker-compose.yml"; DestDir: "{app}"
+Source: "..\InstallerSource\nginx.conf"; DestDir: "{app}"
 Source: ".\start.bat"; DestDir: "{app}"
+Source: ".\down.bat"; DestDir: "{app}"
+Source: ".\doctor.ico"; DestDir: "{app}"
 
 [Code]
 function DockerIsInstalled(): Boolean;
@@ -58,5 +61,8 @@ end;
 Name: "desktopicon"; Description: "Crear acceso directo en el escritorio"; GroupDescription: "Accesos directos adicionales:"
 
 [Icons]
-Name: "{group}\Abrir Medical Office"; Filename: "{code:GetAppUrl}"
-Name: "{commondesktop}\Abrir Medical Office"; Filename: "{code:GetAppUrl}"; Tasks: desktopicon
+Name: "{group}\Abrir Medical Office"; Filename: "{code:GetAppUrl}"; IconFilename: "{app}\doctor.ico"
+Name: "{commondesktop}\Abrir Medical Office"; Filename: "{code:GetAppUrl}"; Tasks: desktopicon; IconFilename: "{app}\doctor.ico"
+
+[UninstallRun]
+Filename: "{app}\down.bat"; Flags: runhidden

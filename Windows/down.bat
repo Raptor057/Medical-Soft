@@ -1,6 +1,6 @@
 @echo off
 cd /d "%~dp0"
 echo.
-echo Iniciando Medical Office con Docker...
+echo Borrando Medical-Soft con Docker...
 docker compose down
 pause
