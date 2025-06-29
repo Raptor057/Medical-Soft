@@ -35,7 +35,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
-        context: InstallerSource/Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/Dockerfile
+        context: InstallerSource/Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB
         push: true
         tags: |
             ghcr.io/${{ secrets.GHCR_USERNAME }}/medical-soft-ms-sql-db:latest
