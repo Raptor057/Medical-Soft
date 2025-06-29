@@ -10,7 +10,7 @@ SolidCompression=yes
 ArchitecturesInstallIn64BitMode=x64
 
 [Files]
-Source: "..\InstallerSource\docker-compose.yml"; DestDir: "{app}"
+Source: ".\docker-compose.yml"; DestDir: "{app}"
 Source: "..\InstallerSource\nginx.conf"; DestDir: "{app}"
 Source: ".\start.bat"; DestDir: "{app}"
 Source: ".\down.bat"; DestDir: "{app}"
