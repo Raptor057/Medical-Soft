@@ -1,6 +1,4 @@
 @echo off
 cd /d "%~dp0"
-echo.
-echo Borrando Medical-Soft con Docker...
-docker compose down
-pause
+docker compose down > nul 2>&1
+exit
