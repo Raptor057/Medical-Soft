@@ -1,0 +1,42 @@
+name: Build and Push db to GHCR
+
+on:
+  push:
+    paths:
+      - 'InstallerSource/Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/version'
+  workflow_dispatch:  # ← Esto permite ejecutarlo manualmente desde la UI de GitHub
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ secrets.GHCR_USERNAME }}
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    - name: Extract version from file
+      id: version
+      run: echo "VERSION=$(cat InstallerSource/Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/version | tr -d '\n')" >> $GITHUB_ENV
+
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: InstallerSource/Medical.Office.SqlLocalDB/Medical.Office.SqlLocalDB/Dockerfile
+        push: true
+        tags: |
+            ghcr.io/${{ secrets.GHCR_USERNAME }}/medical-soft-ms-sql-db:latest
+            ghcr.io/${{ secrets.GHCR_USERNAME }}/medical-soft-ms-sql-db:${{ env.VERSION }}
