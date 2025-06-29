@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'InstallerSource/Medical.Office.ReactWebClient/version'
+  workflow_dispatch:  # ← Esto permite ejecutarlo manualmente desde la UI de GitHub
 
 jobs:
   build-and-push:
