@@ -1,0 +1,54 @@
+services:
+  medicalofficesql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: medicalofficesql
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+    volumes:
+      - ./sqlserver_data:/var/opt/mssql
+    restart: always
+
+  publisher:
+    container_name: medicalofficepublisher
+    image: ghcr.io/raptor057/medical-soft-ms-sql-db:latest
+    depends_on:
+      - medicalofficesql
+    environment:
+      - MSSQL_SA_PASSWORD=${SA_PASSWORD}
+    restart: "no"
+
+  medicalofficewebapi:
+    container_name: medicalofficewebapi
+    image: ghcr.io/raptor057/medical-soft-webapi:latest
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - medicalofficesql
+    restart: always
+
+  medicalofficewebclient:
+    container_name: medicalofficewebclient
+    image: ghcr.io/raptor057/medical-soft-webclient:latest
+    ports:
+      - "3000:80"
+    depends_on:
+      - medicalofficewebapi
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: medicalofficeproxy
+    ports:
+      - "80:80"
+    depends_on:
+      - medicalofficewebclient
+      - medicalofficewebapi
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: always

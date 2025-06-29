@@ -1,4 +1,4 @@
-name: Build Inno Setup Installer
+name: Build Installers for Windows and Linux
 
 on:
   push:
@@ -7,13 +7,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-installer:
+  build-installers:
     runs-on: windows-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # ---------------- WINDOWS INSTALLER ----------------
       - name: Set up Inno Setup
         run: choco install innosetup --no-progress
 
@@ -21,12 +22,24 @@ jobs:
         run: |
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "Windows\installer.iss"
 
+      # ---------------- LINUX INSTALLER ----------------
+      - name: Prepare Linux installer
+        shell: bash
+        run: |
+          mkdir -p LinuxOutput
+          cp -r Linux/install.sh Linux/docker-compose.yml Linux/nginx.conf LinuxOutput/
+          chmod +x LinuxOutput/install.sh
+          cd LinuxOutput
+          zip -r ../installer-linux.zip .
+
+      # ---------------- UPLOAD RELEASE ----------------
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: Windows/Output/*.exe
-          draft: false            # <-- asegúrate de esto
-          prerelease: false       # <-- opcional, marca como versión estable
+          files: |
+            Windows/Output/*.exe
+            installer-linux.zip
+          draft: false
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-
