@@ -25,5 +25,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: Windows/Output/*.exe
+          draft: false            # <-- asegúrate de esto
+          prerelease: false       # <-- opcional, marca como versión estable
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
