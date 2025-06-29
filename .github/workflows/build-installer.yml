@@ -22,15 +22,15 @@ jobs:
         run: |
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" "Windows\installer.iss"
 
-      # ---------------- LINUX INSTALLER ----------------
-      - name: Prepare Linux installer
-        shell: bash
+      # ---------------- LINUX-OSX INSTALLER ----------------
+      - name: Prepare Linux/macOS installer
+        shell: pwsh
         run: |
-          mkdir -p LinuxOutput
-          cp -r Linux/install.sh Linux/docker-compose.yml InstallerSource/nginx.conf LinuxOutput/
-          chmod +x LinuxOutput/install.sh
-          cd LinuxOutput
-          zip -r ../installer-linux.zip .
+          $outDir = "LinuxOutput"
+          New-Item -ItemType Directory -Path $outDir -Force
+          Copy-Item Linux-OSX/install.sh, Linux-OSX/docker-compose.yml, InstallerSource/nginx.conf -Destination $outDir -Recurse
+          icacls "$outDir/install.sh" /grant Everyone:RX > $null
+          Compress-Archive -Path "$outDir/*" -DestinationPath "$outDir/installer-linux-macos.zip" -Force
 
 
       # ---------------- UPLOAD RELEASE ----------------
@@ -39,7 +39,7 @@ jobs:
         with:
           files: |
             Windows/Output/*.exe
-            installer-linux.zip
+            LinuxOutput/installer-linux-macos.zip
           draft: false
           prerelease: false
         env:

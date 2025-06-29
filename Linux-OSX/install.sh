@@ -25,6 +25,6 @@ fi
 
 # Levantar contenedores
 echo "Levantando infraestructura con Docker Compose..."
-docker-compose -f "$BASE_DIR/docker-compose.yml" up -d
+docker-compose -f "$BASE_DIR/docker-compose.yml" up -d --build
 
 echo "✅ Instalación completada. El sistema está corriendo."
