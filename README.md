@@ -61,4 +61,11 @@ Para generar y publicar una nueva versión del instalador en GitHub Releases, re
 
 git tag v1.2.0
 git push origin v1.2.0
-````
+```
+
+1. Borrar un tag
+
+```bash
+git tag -d v1.2.0
+git push origin :refs/tags/v1.2.0
+```

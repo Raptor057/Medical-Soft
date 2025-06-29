@@ -9,7 +9,6 @@ on:
 jobs:
   build-installer:
     runs-on: windows-latest
-    environment: GH_PAT  # Usa el entorno donde tienes el token
 
     steps:
       - name: Checkout repo
@@ -19,12 +18,11 @@ jobs:
         run: choco install innosetup --no-progress
 
       - name: Compile Inno Setup installer
-        run: |
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Windows\installer.iss
+        run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Windows\installer.iss'
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: Output/*.exe
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}  # <- Usar el secret del entorno correctamente
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
