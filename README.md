@@ -1,44 +1,40 @@
 # 🩺 Medical Soft Installer
 
-**Medical Soft** es un instalador todo-en-uno para un sistema médico construido en .NET 8 y React. Este paquete instala automáticamente el backend, frontend y base de datos local en contenedores Docker mediante `docker-compose`, dejando el sistema listo para usarse con un solo clic.
+**Medical Soft** es un instalador todo-en-uno para un sistema médico construido en .NET 8 y React. Este paquete instala automáticamente el backend, frontend y base de datos en contenedores Docker mediante `docker-compose`, dejando el sistema listo para usarse con un solo clic.
 
 ---
 
 ## 📦 Contenido del instalador
 
-El instalador incluye:
+Incluye los siguientes servicios:
 
-- `Medical.Office.Net8WebApi`: API REST desarrollada en .NET 8
-- `Medical.Office.ReactWebClient`: Frontend moderno construido con React y TailwindCSS
-- `Medical.Office.SqlLocalDB`: Proyecto SQL con estructura y datos iniciales
-- `docker-compose.yml`: Orquestador de servicios Docker
-- `start.bat`: Script para levantar la infraestructura
-- `.env`: Archivo generado dinámicamente con la configuración necesaria
-
----
-
-## 🚀 Requisitos
-
-Antes de instalar, asegúrate de tener:
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado y corriendo
-- Windows 10/11 (64-bit)
+- 🧠 `Medical.Office.Net8WebApi`: API REST desarrollada en .NET 8
+- 🎨 `Medical.Office.ReactWebClient`: Frontend moderno con React + TailwindCSS
+- 🗄️ `Medical.Office.SqlLocalDB`: Proyecto SQL Server con datos iniciales
+- ⚙️ `docker-compose.yml`: Orquestador de infraestructura
+- 📝 `.env`: Archivo generado dinámicamente con credenciales
 
 ---
 
-## 🛠️ Instalación
+## 🚀 Requisitos previos
+
+Asegúrate de tener instalado:
+
+- [Docker](https://www.docker.com/products/docker-desktop)
+- Windows 10/11 (x64) **o** cualquier distribución Linux/macOS con soporte para Docker
+
+---
+
+
+## 🖥️ Instalación en Windows
 
 1. **Descarga el instalador:**  
-   Ve a la pestaña [Releases](https://github.com/TU_REPO/releases) y descarga el archivo `.exe` más reciente (`MedicalSoftInstaller.exe`).
+   Ve a la pestaña [Releases](https://github.com/Raptor057/Medical-Soft/releases) y descarga el archivo `.exe` más reciente (`MedicalSoftInstaller.exe`).
 
 2. **Ejecuta el instalador como administrador.**
 
-3. **Ingresa la IP del servidor local donde correrá el backend.**  
-   Por defecto, se usará el puerto `8080`.
-
-4. **El sistema levantará automáticamente los contenedores Docker** con:
-   - API en `http://TU_IP:8080/`
-   - Frontend en `http://TU_IP:3000/`
+3. **Espera a que Docker levante los servicios automáticamente:**
+   - Frontend: `http://localhost/`
 
 ---
 
@@ -46,9 +42,40 @@ Antes de instalar, asegúrate de tener:
 
 - El archivo `.env` se genera dinámicamente durante la instalación.
 - Si Docker no está instalado o no está en el `PATH`, el instalador no continuará.
-- El instalador evita copiar carpetas innecesarias como `bin`, `obj`, `.vs`, `node_modules`, etc.
 
 ---
+
+## 🍎 Instalación en macOS
+
+1. Descarga el archivo `installer-linux-macos.zip` desde [Releases](https://github.com/Raptor057/Medical-Soft/releases).
+
+
+```bash
+sed -i '' 's/\r$//' install.sh
+chmod +x install.sh
+./install.sh
+```
+
+## 🐧 Instalación en Linux (Ubuntu / Debian / Fedora)
+1. Descarga y descomprime el archivo `installer-linux-macos.zip` desde [Releases](https://github.com/Raptor057/Medical-Soft/releases).
+
+```bash
+unzip installer-linux-macos.zip
+cd installer-linux-macos
+```
+
+2. Dale permisos de ejecución y corre el instalador
+```bash
+unzip installer-linux-macos.zip
+cd installer-linux-macos
+```
+
+2. Asigna permisos y ejecuta:
+
+```bash
+chmod +x install.sh
+./install.sh
+```
 
 ## 📤 Publicación de nuevas versiones (desarrolladores)
 
