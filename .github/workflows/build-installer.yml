@@ -27,10 +27,11 @@ jobs:
         shell: bash
         run: |
           mkdir -p LinuxOutput
-          cp -r Linux/install.sh Linux/docker-compose.yml Linux/nginx.conf LinuxOutput/
+          cp -r Linux/install.sh Linux/docker-compose.yml InstallerSource/nginx.conf LinuxOutput/
           chmod +x LinuxOutput/install.sh
           cd LinuxOutput
           zip -r ../installer-linux.zip .
+
 
       # ---------------- UPLOAD RELEASE ----------------
       - name: Upload to GitHub Release
