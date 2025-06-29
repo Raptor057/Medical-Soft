@@ -21,7 +21,6 @@ services:
     restart: "no"
 
 
-
   medicalofficewebapi:
     container_name: medicalofficewebapi
     image: ghcr.io/raptor057/medical-soft-webapi:latest

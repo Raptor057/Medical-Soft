@@ -58,7 +58,6 @@ Para generar y publicar una nueva versión del instalador en GitHub Releases, re
 2. Crea un nuevo tag con la versión deseada:
 
 ```bash
-
 git tag v1.2.0
 git push origin v1.2.0
 ```
