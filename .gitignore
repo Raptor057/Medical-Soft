@@ -251,3 +251,5 @@ yarn-debug.log
 yarn-error.log
 ~$*
 Medical.Office.Net8WebApi/Medical.Office.Net8WebApi/secrets/google-credentials.json
+
+Windows/nginx.conf
