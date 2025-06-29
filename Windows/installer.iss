@@ -11,7 +11,7 @@ ArchitecturesInstallIn64BitMode=x64
 
 [Files]
 Source: ".\docker-compose.yml"; DestDir: "{app}"
-Source: ".\nginx.conf"; DestDir: "{app}"
+Source: "..\InstallerSource\nginx.conf"; DestDir: "{app}"
 Source: ".\start.bat"; DestDir: "{app}"
 Source: ".\down.bat"; DestDir: "{app}"
 Source: ".\doctor.ico"; DestDir: "{app}"
