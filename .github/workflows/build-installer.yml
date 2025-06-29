@@ -20,7 +20,7 @@ jobs:
 
       - name: Compile Inno Setup installer
         run: |
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" Windows\installer.iss
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
